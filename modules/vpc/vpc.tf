@@ -41,7 +41,7 @@ resource "aws_nat_gateway" "nat" {
 resource "aws_subnet" "pub_subnet" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "${var.pub_subnet_cidr}"
-  availability_zone = "${var.region}a"
+  availability_zone = "${var.pub_zone}"
 
   tags = {
     Name        = "${var.project_name}-pub-subnet"
@@ -52,7 +52,7 @@ resource "aws_subnet" "pub_subnet" {
 resource "aws_subnet" "priv_subnet" {
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = "${var.priv_subnet_cidr}"
-  availability_zone = "${var.region}b"
+  availability_zone = "${var.priv_zone}"
 
   tags = {
     Name        = "${var.project_name}-priv-subnet"
@@ -64,7 +64,7 @@ resource "aws_route_table" "pub_route_table" {
   vpc_id = aws_vpc.vpc.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block = "${var.route_destination_cidr_block}"
     gateway_id = aws_internet_gateway.igw.id
   }
 
@@ -85,7 +85,7 @@ resource "aws_route_table" "priv_route_table" {
 
 resource "aws_route" "priv_nat" {
   route_table_id         = aws_route_table.priv_route_table.id
-  destination_cidr_block = "0.0.0.0/0"
+  destination_cidr_block = "${var.route_destination_cidr_block}"
   nat_gateway_id         = aws_nat_gateway.nat.id
 }
 
