@@ -3,21 +3,26 @@ resource "aws_security_group" "sg" {
   vpc_id     = aws_vpc.vpc.id
   depends_on = [aws_vpc.vpc]
 
+  // If you want to use a variable for cidr_blocks
+  // find sg_cidr_blocks_inbound and sg_cidr_blocks_outbound
+  // and replace it in cidr_blocks
   ingress {
     description = "SSH access"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.sg_cidr_blocks_inbound}"]
+    cidr_blocks = [aws_vpc.vpc.cidr_block]
+    // ["${var.sg_cidr_blocks_outbound}"]
   }
 
-  // Although I'm not restricting outbound rules here in this case
-  // it definitely should be (this is just a demo project)
+  // Restricting outbound rules with cidr_block
+  // Allowing all outbound traffic though
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["${var.sg_cidr_blocks_outbound}"]
+    cidr_blocks = [aws_vpc.vpc.cidr_block]
+    // ["${var.sg_cidr_blocks_outbound}"]
   }
 
 /*
