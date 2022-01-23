@@ -71,7 +71,7 @@ resource "aws_security_group" "priv_sg" {
   vpc_id     = aws_vpc.vpc.id
   depends_on = [aws_vpc.vpc]
 
-  // Only allowing traffic from a VPC public subnet
+  // Only allowing traffic from VPC
   ingress {
     description = "SSH access"
     from_port   = 22
