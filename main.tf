@@ -23,6 +23,7 @@ module "ec2" {
   priv_sub_id   = module.vpc.priv_sub_id
   pub_sg_id     = module.vpc.pub_sg_id
   priv_sg_id    = module.vpc.priv_sg_id
+  key_name      = aws_key_pair.key_pair.key_name
 
   project_name  = "${var.project_name}"
   environment   = "${var.environment}"
