@@ -1,4 +1,4 @@
-resource "aws_security_group" "sg" {
+resource "aws_security_group" "pub_sg" {
   name       = "${var.project_name}-security-group"
   vpc_id     = aws_vpc.vpc.id
   depends_on = [aws_vpc.vpc]
@@ -62,6 +62,33 @@ resource "aws_security_group" "sg" {
 
   tags = {
     Name        = "${var.project_name}-security-group"
+    Environment = "${var.environment}-security-group"
+  }
+}
+
+resource "aws_security_group" "priv_sg" {
+  name       = "${var.project_name}-security-group-private"
+  vpc_id     = aws_vpc.vpc.id
+  depends_on = [aws_vpc.vpc]
+
+  // Only allowing traffic from a VPC public subnet
+  ingress {
+    description = "SSH access"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.vpc.cidr_block]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["${var.sg_cidr_blocks_outbound}"]
+  }
+
+  tags = {
+    Name        = "${var.project_name}-security-group-private"
     Environment = "${var.environment}-security-group"
   }
 }
