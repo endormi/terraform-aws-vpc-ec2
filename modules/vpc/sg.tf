@@ -1,5 +1,5 @@
 resource "aws_security_group" "pub_sg" {
-  name       = "${var.project_name}-security-group"
+  name       = "${var.project_name}-security-group-public"
   vpc_id     = aws_vpc.vpc.id
   depends_on = [aws_vpc.vpc]
 
@@ -61,8 +61,8 @@ resource "aws_security_group" "pub_sg" {
 */
 
   tags = {
-    Name        = "${var.project_name}-security-group"
-    Environment = "${var.environment}-security-group"
+    Name        = "${var.project_name}-security-group-public"
+    Environment = "${var.environment}-security-group-public"
   }
 }
 
@@ -89,6 +89,6 @@ resource "aws_security_group" "priv_sg" {
 
   tags = {
     Name        = "${var.project_name}-security-group-private"
-    Environment = "${var.environment}-security-group"
+    Environment = "${var.environment}-security-group-private"
   }
 }
