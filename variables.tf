@@ -1,3 +1,4 @@
+// For vpc
 variable "project_name" {}
 variable "region" {}
 variable "environment" {}
@@ -9,3 +10,7 @@ variable "pub_subnet_cidr" {}
 variable "priv_subnet_cidr" {}
 variable "pub_zone" {}
 variable "priv_zone" {}
+
+// For ec2
+variable "ami" {}
+variable "instance_type" {}

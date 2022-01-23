@@ -15,7 +15,7 @@ resource "aws_security_group" "pub_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${var.sg_cidr_blocks_inbound}"]
+    cidr_blocks = ["${jsondecode(data.http.myip.body).ip}/32"]
   }
 
   egress {

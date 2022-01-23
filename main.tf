@@ -13,3 +13,17 @@ module "vpc" {
   pub_zone                     = "${var.pub_zone}"
   priv_zone                    = "${var.priv_zone}"
 }
+
+module "ec2" {
+  source        = "./modules/ec2"
+
+  ami           = "${var.ami}"
+  instance_type = "${var.instance_type}"
+  pub_sub_id    = module.vpc.pub_sub_id
+  priv_sub_id   = module.vpc.priv_sub_id
+  pub_sg_id     = module.vpc.pub_sg_id
+  priv_sg_id    = module.vpc.priv_sg_id
+
+  project_name  = "${var.project_name}"
+  environment   = "${var.environment}"
+}
