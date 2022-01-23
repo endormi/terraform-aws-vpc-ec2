@@ -3,26 +3,26 @@ resource "aws_security_group" "sg" {
   vpc_id     = aws_vpc.vpc.id
   depends_on = [aws_vpc.vpc]
 
-  // If you want to use a variable for cidr_blocks
-  // find sg_cidr_blocks_inbound and sg_cidr_blocks_outbound
-  // and replace it in cidr_blocks
+  /*
+    If you want to allow traffic from a VPC, you can use
+    [aws_vpc.vpc.cidr_block]
+
+    Do not give access to everyone! You can for example use your
+    own IP.
+  */
   ingress {
     description = "SSH access"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-    // ["${var.sg_cidr_blocks_outbound}"]
+    cidr_blocks = ["${var.sg_cidr_blocks_inbound}"]
   }
 
-  // Restricting outbound rules with cidr_block
-  // Allowing all outbound traffic though
   egress {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = [aws_vpc.vpc.cidr_block]
-    // ["${var.sg_cidr_blocks_outbound}"]
+    cidr_blocks = ["${var.sg_cidr_blocks_outbound}"]
   }
 
 /*
