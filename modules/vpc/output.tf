@@ -17,3 +17,7 @@ output "pub_sub_id" {
 output "priv_sub_id" {
   value = aws_subnet.priv_subnet.id
 }
+
+output "igw_id" {
+  value = aws_internet_gateway.igw.id
+}
