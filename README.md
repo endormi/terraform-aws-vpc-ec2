@@ -33,6 +33,8 @@ ami                          = ""
 instance_type                = ""
 ```
 
+I used a lot of tags, because it is a good practice to use them. If I were to own 50 ec2 instances, finding the right one would be very hard without tags.
+
 Initialize:
 
 ```
