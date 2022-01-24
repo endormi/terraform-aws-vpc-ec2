@@ -1,6 +1,5 @@
 terraform {
-  // WIP
-  // required_version = ">= "
+  required_version = ">= 1.0"
 
   required_providers {
     aws = {
@@ -9,7 +8,11 @@ terraform {
     }
     http = {
       source = "hashicorp/http"
-      version = ">= 2.1"
+      version = ">= 2.0"
+    }
+    tls = {
+      source = "hashicorp/tls"
+      version = ">= 3.0"
     }
   }
 }
